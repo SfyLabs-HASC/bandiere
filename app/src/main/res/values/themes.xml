@@ -1,6 +1,4 @@
 <resources>
-    <style name="Theme.FlagsQuiz" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-    </style>
+    <style name="Theme.FlagsQuiz" parent="Theme.Material3.DayNight.NoActionBar"/>
 </resources>
 
