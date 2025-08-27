@@ -57,5 +57,18 @@ dependencies {
     // Coroutines & Collections
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     implementation("androidx.collection:collection-ktx:1.4.5")
+
+    // Force modern AndroidX to avoid old transitive dependencies
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.fragment:fragment:1.8.3")
+    implementation("androidx.loader:loader:1.1.0")
+    implementation("androidx.browser:browser:1.8.0")
+    implementation("androidx.webkit:webkit:1.10.0")
+    implementation("androidx.exifinterface:exifinterface:1.3.7")
+    implementation("androidx.work:work-runtime:2.9.1")
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-common:2.6.1")
+    implementation("androidx.sqlite:sqlite:2.4.0")
+    implementation("androidx.sqlite:sqlite-framework:2.4.0")
 }
 
