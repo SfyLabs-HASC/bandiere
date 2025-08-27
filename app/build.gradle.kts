@@ -48,6 +48,9 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.7.0")
 
+    // Material Components (XML themes for Material3)
+    implementation("com.google.android.material:material:1.12.0")
+
     implementation("com.google.android.gms:play-services-ads:23.3.0")
     implementation("com.google.mlkit:translate:17.0.2")
 
