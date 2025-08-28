@@ -50,6 +50,11 @@ java {
     }
 }
 
+configurations.all {
+    // ensure no custom resolvable-consumable conflicts
+    attributesSchema
+}
+
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2024.10.01")
     implementation(composeBom)
