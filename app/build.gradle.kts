@@ -43,6 +43,13 @@ android {
     }
 }
 
+// Kotlin JVM toolchain for Gradle < 8.8 compatibility
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2024.10.01")
     implementation(composeBom)
