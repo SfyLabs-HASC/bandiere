@@ -9,6 +9,8 @@ from .preprocess.logos import detect_logo_boxes_stub
 from .utils.masks import blur_boxes_inplace
 from .safety.nsfw import is_image_safe_stub
 from .safety.brand import review_brand_risk_stub
+from .generation.sd import generate_img2img
+from .postprocess.upscale import upscale_image
 
 
 def run_pipeline(input_path: Optional[Path], style: str, output_path: Path, sd_model_path: Path, upscale: int, dry_run: bool) -> None:
@@ -24,15 +26,25 @@ def run_pipeline(input_path: Optional[Path], style: str, output_path: Path, sd_m
 
     blur_boxes_inplace(image_np, logo_boxes)
 
-    result_np = image_np
+    negative = "nsfw, watermark, logo, text overlay, low quality, blurry, distorted"
+    result_np = generate_img2img(
+        image_rgb=image_np,
+        prompt=prompt_text,
+        negative_prompt=negative,
+        model_dir=str(sd_model_path),
+        num_inference_steps=20,
+        strength=0.6,
+        guidance_scale=7.5,
+        seed=None,
+    ) if not dry_run else image_np
 
     if not is_image_safe_stub():
         raise SystemExit("Image flagged as unsafe by stub checker")
 
     _ = review_brand_risk_stub(logo_boxes)
 
+    # upscaling (prefer external realesrgan if provided via args; stub not wired here)
+    result_np = upscale_image(result_np, scale=upscale, realesrgan_ncnn_bin=None)
     result = numpy_to_pil_rgb(result_np)
-    if upscale and upscale > 1:
-        result = result.resize((result.width * upscale, result.height * upscale), resample=Image.LANCZOS)
     result.save(output_path)
     print(f"Saved: {output_path}")
