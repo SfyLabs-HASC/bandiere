@@ -19,6 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ai.homedesign.app.settings.SettingsStore
+import androidx.compose.material3.Icon
+import androidx.compose.material3.icons.Icons
+import androidx.compose.material3.icons.filled.Settings
+import androidx.compose.ui.platform.LocalContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,12 +34,22 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun App() {
-    MaterialTheme { Surface(Modifier.fillMaxSize()) { HomeScreen() } }
+    MaterialTheme {
+        var showSettings by remember { mutableStateOf(false) }
+        val ctx = LocalContext.current
+        val store = remember { SettingsStore(ctx) }
+        Surface(Modifier.fillMaxSize()) {
+            if (showSettings) SettingsScreen(store) else HomeScreen(store)
+        }
+        FloatingActionButton(onClick = { showSettings = !showSettings }, modifier = Modifier.padding(16.dp)) {
+            Icon(Icons.Default.Settings, contentDescription = null)
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(store: SettingsStore) {
     var selectedBitmap by remember { mutableStateOf<Bitmap?>(null) }
     var resultBitmap by remember { mutableStateOf<Bitmap?>(null) }
     var style by remember { mutableStateOf("scandinavian") }
