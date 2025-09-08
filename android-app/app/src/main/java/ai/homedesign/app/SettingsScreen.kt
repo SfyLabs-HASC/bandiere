@@ -22,6 +22,7 @@ fun SettingsScreen(store: SettingsStore) {
     var upscalerBin by remember { mutableStateOf(state.upscalerBin) }
     var stepsText by remember { mutableStateOf(state.steps.toString()) }
     var seedText by remember { mutableStateOf(state.seed.toString()) }
+    var upscaleText by remember { mutableStateOf(state.upscale.toString()) }
 
     val dirPicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocumentTree()
@@ -41,6 +42,7 @@ fun SettingsScreen(store: SettingsStore) {
 
         OutlinedTextField(value = stepsText, onValueChange = { stepsText = it.filter { c -> c.isDigit() } }, label = { Text("Steps SD") })
         OutlinedTextField(value = seedText, onValueChange = { seedText = it.filter { c -> c.isDigit() } }, label = { Text("Seed") })
+        OutlinedTextField(value = upscaleText, onValueChange = { upscaleText = it.filter { c -> c.isDigit() } }, label = { Text("Upscale (1-4)") })
 
         Button(onClick = {
             scope.launch {
@@ -50,6 +52,8 @@ fun SettingsScreen(store: SettingsStore) {
                         upscalerBin = upscalerBin,
                         steps = stepsText.toIntOrNull() ?: cur.steps,
                         seed = seedText.toIntOrNull() ?: cur.seed,
+                        ,
+                        upscale = (upscaleText.toIntOrNull() ?: cur.upscale).coerceIn(1, 4)
                     )
                 }
             }

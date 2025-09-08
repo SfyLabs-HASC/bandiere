@@ -16,6 +16,7 @@ object Keys {
     val UPSCALER_BIN = stringPreferencesKey("upscaler_bin")
     val STEPS = intPreferencesKey("steps")
     val SEED = intPreferencesKey("seed")
+    val UPSCALE = intPreferencesKey("upscale")
 }
 
 data class AppSettings(
@@ -23,6 +24,7 @@ data class AppSettings(
     val upscalerBin: String = "",
     val steps: Int = 20,
     val seed: Int = 0,
+    val upscale: Int = 1,
 )
 
 class SettingsStore(private val context: Context) {
@@ -32,6 +34,7 @@ class SettingsStore(private val context: Context) {
             upscalerBin = p[Keys.UPSCALER_BIN] ?: "",
             steps = p[Keys.STEPS] ?: 20,
             seed = p[Keys.SEED] ?: 0,
+            upscale = p[Keys.UPSCALE] ?: 1,
         )
     }
 
@@ -42,12 +45,14 @@ class SettingsStore(private val context: Context) {
                 upscalerBin = p[Keys.UPSCALER_BIN] ?: "",
                 steps = p[Keys.STEPS] ?: 20,
                 seed = p[Keys.SEED] ?: 0,
+                upscale = p[Keys.UPSCALE] ?: 1,
             )
             val n = block(cur)
             p[Keys.MODEL_DIR] = n.modelDir
             p[Keys.UPSCALER_BIN] = n.upscalerBin
             p[Keys.STEPS] = n.steps
             p[Keys.SEED] = n.seed
+            p[Keys.UPSCALE] = n.upscale
         }
     }
 }
