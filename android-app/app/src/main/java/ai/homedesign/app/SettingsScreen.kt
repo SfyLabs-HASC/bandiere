@@ -23,7 +23,7 @@ fun SettingsScreen(store: SettingsStore) {
     var stepsText by remember { mutableStateOf(state.steps.toString()) }
     var seedText by remember { mutableStateOf(state.seed.toString()) }
     var upscaleText by remember { mutableStateOf(state.upscale.toString()) }
-    var upscalerModel by remember { mutableStateOf("") }
+    var upscalerModel by remember { mutableStateOf(state.upscalerModel) }
 
     val ctx = androidx.compose.ui.platform.LocalContext.current
     val dirPicker = rememberLauncherForActivityResult(
@@ -60,8 +60,8 @@ fun SettingsScreen(store: SettingsStore) {
                         upscalerBin = upscalerBin,
                         steps = stepsText.toIntOrNull() ?: cur.steps,
                         seed = seedText.toIntOrNull() ?: cur.seed,
-                        ,
-                        upscale = (upscaleText.toIntOrNull() ?: cur.upscale).coerceIn(1, 4)
+                        upscale = (upscaleText.toIntOrNull() ?: cur.upscale).coerceIn(1, 4),
+                        upscalerModel = upscalerModel
                     )
                 }
             }

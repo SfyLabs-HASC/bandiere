@@ -116,7 +116,7 @@ fun HomeScreen(store: SettingsStore) {
                 working,
                 scale,
                 modelDir = settings.modelDir,
-                modelName = "realesrgan-x" + (if (scale >= 4) "4" else "2") + "plus"
+                modelName = settings.upscalerModel.ifBlank { "realesrgan-x" + (if (scale >= 4) "4" else "2") + "plus" }
             ) else working
         }) { Text("Genera") }
 
