@@ -1,0 +1,3 @@
+-keep class ai.homedesign.app.** { *; }
+-dontwarn org.tensorflow.**
+-dontwarn org.pytorch.**
