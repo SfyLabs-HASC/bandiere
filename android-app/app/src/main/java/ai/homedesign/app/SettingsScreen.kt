@@ -23,6 +23,7 @@ fun SettingsScreen(store: SettingsStore) {
     var stepsText by remember { mutableStateOf(state.steps.toString()) }
     var seedText by remember { mutableStateOf(state.seed.toString()) }
     var upscaleText by remember { mutableStateOf(state.upscale.toString()) }
+    var upscalerModel by remember { mutableStateOf("") }
 
     val ctx = androidx.compose.ui.platform.LocalContext.current
     val dirPicker = rememberLauncherForActivityResult(
@@ -45,6 +46,7 @@ fun SettingsScreen(store: SettingsStore) {
         Button(onClick = { dirPicker.launch(null) }) { Text("Scegli cartella modelli") }
 
         OutlinedTextField(value = upscalerBin, onValueChange = { upscalerBin = it }, label = { Text("Percorso upscaler bin (facoltativo)") }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(value = upscalerModel, onValueChange = { upscalerModel = it }, label = { Text("Nome modello upscaler (es. realesrgan-x4plus)") }, modifier = Modifier.fillMaxWidth())
 
         OutlinedTextField(value = stepsText, onValueChange = { stepsText = it.filter { c -> c.isDigit() } }, label = { Text("Steps SD") })
         OutlinedTextField(value = seedText, onValueChange = { seedText = it.filter { c -> c.isDigit() } }, label = { Text("Seed") })

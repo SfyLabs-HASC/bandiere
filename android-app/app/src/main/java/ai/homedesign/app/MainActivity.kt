@@ -112,7 +112,12 @@ fun HomeScreen(store: SettingsStore) {
             // Apply upscaling from settings
             val settings by store.flow.collectAsState(initial = ai.homedesign.app.settings.AppSettings())
             val scale = settings.upscale.coerceAtLeast(1)
-            resultBitmap = if (scale > 1) Upscaler.upscale(working, scale) else working
+            resultBitmap = if (scale > 1) Upscaler.upscale(
+                working,
+                scale,
+                modelDir = settings.modelDir,
+                modelName = "realesrgan-x" + (if (scale >= 4) "4" else "2") + "plus"
+            ) else working
         }) { Text("Genera") }
 
         resultBitmap?.let { out ->

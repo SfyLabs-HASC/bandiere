@@ -5,5 +5,9 @@ object NativeBridge {
 
     external fun sdVersion(): String
     external fun upscalerVersion(): String
+
+    // Upscaler JNI placeholders
+    external fun upscalerInit(modelDir: String, modelName: String): Boolean
+    external fun upscalerRun(pixelsIn: IntArray, width: Int, height: Int, scale: Int): IntArray?
 }
 
