@@ -16,6 +16,25 @@ dependencyResolutionManagement {
 
 rootProject.name = "HomeDesignAI"
 include(":app")
+
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "HomeDesignAI"
+include(":app")
 \nEOF\n
 cat > /workspace/android-app/build.gradle.kts << nEOFn
 plugins {
