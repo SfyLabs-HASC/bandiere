@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Optional
 import numpy as np
 from PIL import Image
+import numpy as np
 
 
 def load_image_rgb(path: Optional[Path]) -> Image.Image:
@@ -12,7 +13,8 @@ def load_image_rgb(path: Optional[Path]) -> Image.Image:
 
 
 def pil_to_numpy_rgb(img: Image.Image) -> np.ndarray:
-    return np.asarray(img)
+    # ensure a writable copy
+    return np.array(img).copy()
 
 
 def numpy_to_pil_rgb(arr: np.ndarray) -> Image.Image:
