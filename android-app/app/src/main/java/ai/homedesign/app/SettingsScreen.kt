@@ -1,7 +1,7 @@
 package ai.homedesign.app
 
 import android.net.Uri
-import android.os.Build
+import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
@@ -24,11 +24,17 @@ fun SettingsScreen(store: SettingsStore) {
     var seedText by remember { mutableStateOf(state.seed.toString()) }
     var upscaleText by remember { mutableStateOf(state.upscale.toString()) }
 
+    val ctx = androidx.compose.ui.platform.LocalContext.current
     val dirPicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocumentTree()
     ) { uri: Uri? ->
         if (uri != null) {
             modelDir = uri.toString()
+            // Try to persist URI permission
+            try {
+                val flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                ctx.contentResolver.takePersistableUriPermission(uri, flags)
+            } catch (_: Exception) {}
         }
     }
 

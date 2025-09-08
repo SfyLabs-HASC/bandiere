@@ -108,7 +108,11 @@ fun HomeScreen(store: SettingsStore) {
 
             val logos = listOf(Pipeline.LogoBox((working.width*0.7).toInt(), 16, working.width-16, (working.height*0.3).toInt()))
             Pipeline.blurBoxesInPlace(working, logos)
-            resultBitmap = working
+
+            // Apply upscaling from settings
+            val settings by store.flow.collectAsState(initial = ai.homedesign.app.settings.AppSettings())
+            val scale = settings.upscale.coerceAtLeast(1)
+            resultBitmap = if (scale > 1) Upscaler.upscale(working, scale) else working
         }) { Text("Genera") }
 
         resultBitmap?.let { out ->
